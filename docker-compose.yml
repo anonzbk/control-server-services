@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  server-control-panel:
+    build: .
+    container_name: server-control-panel
+    env_file: .env
+    ports:
+      - "${PORT:-3000}:3000"
+    restart: unless-stopped
+    volumes:
+      - ./public:/app/public
+    environment:
+      - NODE_ENV=production

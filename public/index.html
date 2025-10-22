@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Control Terminal</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    body { background: #000; color: #ff0; font-family: monospace; padding: 20px; }
+    h1 { color: #ff0; }
+    button { background: #000; color: #ff0; border: 1px solid #ff0; padding: 8px 16px; margin-right: 8px; cursor: pointer; }
+    button:hover { background: #111; }
+    #terminal { background: #000; color: #ff0; padding: 10px; height: 500px; overflow-y: scroll; border: 1px solid #ff0; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>💻 Server Control Terminal</h1>
+  <button id="startBtn">START</button>
+  <button id="stopBtn">STOP</button>
+  <button id="statusBtn">STATUS</button>
+
+  <div id="terminal"></div>
+
+  <script>
+    const socket = io();
+    const terminal = document.getElementById('terminal');
+
+    function addLog(message) {
+      terminal.innerHTML += message + '<br>';
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    socket.on('log', data => {
+      if (data.message) addLog(data.message.replace(/\n/g, '<br>'));
+    });
+
+    document.getElementById('startBtn').onclick = () => socket.emit('action', 'start');
+    document.getElementById('stopBtn').onclick = () => socket.emit('action', 'stop');
+    document.getElementById('statusBtn').onclick = () => socket.emit('action', 'status');
+  </script>
+</body>
+</html>

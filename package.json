@@ -1,0 +1,15 @@
+{
+  "name": "server-control-panel",
+  "version": "1.0.0",
+  "description": "Terminal-style Node.js SSH server controller",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.19.2",
+    "node-ssh": "^13.2.0",
+    "socket.io": "^4.7.5"
+  }
+}
